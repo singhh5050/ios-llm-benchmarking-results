@@ -1,6 +1,6 @@
-# iOS LLM Model Performance Analysis [GEMMA 3N FORTHCOMING]
+# iOS LLM Model Performance Analysis [Gemma 3n forthcoming!]
 
-This repository contains comprehensive benchmarking results for LLM models running on iOS devices. The analysis covers three language models: Llama 3.2, Phi3, and Qwen3. Each model was tested using the Instruct variant at Q4_K_M quantization level. All models were evaluated on a dataset of 1000 prompts randomly sampled from LMSys-Chat, running on iOS using the Metal backend. (WORKING ON GEMMA 3N RN)
+This repository contains comprehensive benchmarking results for LLM models running on iOS devices. The analysis covers three language models: Llama 3.2, Phi3, and Qwen3. Each model was tested using the Instruct variant at Q4_K_M quantization level. All models were evaluated on a dataset of 1000 prompts randomly sampled from LMSys-Chat, running on iOS using the Metal backend. (Working on Gemma 3n right now!)
 
 Swift implementation available at [https://github.com/singhh5050/llama.swiftui](https://github.com/singhh5050/llama.swiftui). This runs as a submodule in the `/examples` directory of [https://github.com/ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp).
 
