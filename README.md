@@ -1,6 +1,6 @@
 # iOS LLM Model Performance Analysis
 
-This repository contains comprehensive benchmarking results for LLM models running on iOS devices. The analysis covers three language models: Llama 3.2, Phi3, and Qwen3. Each model was tested using the Instruct variant at Q4_K_M quantization level. All models were evaluated on a dataset of 1000 prompts randomly sampled from LMSys-Chat, running on iOS using the Metal backend.
+This repository contains comprehensive benchmarking results for LLM models running on iOS devices. The analysis covers four language models: Llama 3.2, Phi3, Qwen3, and Gemma 3N. Each model was tested using the Instruct variant at Q4_K_M quantization level. All models were evaluated on a dataset of 1000 prompts randomly sampled from LMSys-Chat, running on iOS using the Metal backend.
 
 Swift implementation available at [https://github.com/singhh5050/llama.swiftui](https://github.com/singhh5050/llama.swiftui). This runs as a submodule in the `/examples` directory of [https://github.com/ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp).
 
@@ -13,6 +13,7 @@ Swift implementation available at [https://github.com/singhh5050/llama.swiftui](
 | Llama | 1046.2±678 | 135.6±43 | 11.8±2.4 | 17679±14737 | 312.9±149.4 |
 | Phi3  | 1439.1±636 | 129.3±34 | 9.6±1.9 | 15852±14400 | 306.3±131.6 |
 | Qwen  | 1636.8±720 | 114.2±29 | 9.9±1.8 | 19250±13717 | 343.7±126.8 |
+| Gemma | 3955.0±1697 | 50.6±6 | 7.6±1.8 | 71291±126097 | 392.0±158.1 |
 
 ### Key Findings
 
@@ -20,7 +21,8 @@ Swift implementation available at [https://github.com/singhh5050/llama.swiftui](
 - **Most Efficient Prefill**: Llama 3.2 achieves highest prefill throughput at 135.6 TPS
 - **Fastest Decode**: Llama 3.2 leads in decode speed at 11.8 TPS
 - **Lowest Total Latency**: Phi3 has the shortest average total latency despite slower TTFT
-- **Most Verbose**: Qwen generates the most tokens on average (343.7 tokens)
+- **Most Verbose**: Gemma generates the most tokens on average (392.0 tokens)
+- **Slowest Performance**: Gemma 3N shows significantly slower performance across all metrics with highest variability
 
 ## Visualizations
 
@@ -78,7 +80,13 @@ Swift implementation available at [https://github.com/singhh5050/llama.swiftui](
 - **Model Size**: 2.32 GiB
 - **Quantization**: Q4_K_M
 - **Backend**: Metal (iOS)
-- **Performance**: Most verbose output, moderate speeds
+- **Performance**: Verbose output, moderate speeds
+
+### Gemma 3N (4B Parameters)
+- **Model Size**: 4.0 GiB
+- **Quantization**: Q4_K_M
+- **Backend**: Metal (iOS)
+- **Performance**: Slowest performance, highest token output, high variability
 
 ## Repository Structure
 
@@ -87,7 +95,8 @@ Swift implementation available at [https://github.com/singhh5050/llama.swiftui](
 ├── data/                              # Raw benchmark data
 │   ├── llama_combined.csv
 │   ├── phi3_combined.csv
-│   └── qwen_combined.csv
+│   ├── qwen_combined.csv
+│   └── gemma_combined.csv
 ├── figures/                           # Generated visualizations
 │   ├── time_to_first_token_comparison.png
 │   ├── prefill_throughput_comparison.png
@@ -195,10 +204,17 @@ Running LLMs on iOS presents unique challenges and opportunities:
    - Stable performance characteristics
    - Moderate resource requirements
 
-3. **Qwen3** generates the most comprehensive responses:
-   - Highest token output (343.7 average)
+3. **Qwen3** provides solid middle-ground performance:
+   - Moderate token output (343.7 average)
    - Slower but consistent performance
-   - Largest model with most parameters
+   - Reasonable resource requirements
+
+4. **Gemma 3N** shows mixed performance characteristics:
+   - Significantly slower TTFT (3955ms average) but reasonable prefill speed (50.6 TPS)
+   - Moderate prefill throughput, slower than Llama/Phi3 but competitive with Qwen
+   - Highest token output (392.0 average) but with high variability
+   - Largest model size and highest resource requirements
+   - Trade-off between slower initial response but more comprehensive output
 
 ## Related Work
 

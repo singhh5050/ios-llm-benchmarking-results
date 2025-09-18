@@ -8,6 +8,7 @@ It generates comprehensive visualizations and summary statistics for:
 - Llama 3.2
 - Phi3  
 - Qwen3
+- Gemma 3N
 
 The analysis includes:
 - Time to First Token (TTFT) comparisons
@@ -45,7 +46,8 @@ def load_data():
     model_files = {
         'Llama': 'llama_combined.csv',
         'Phi3': 'phi3_combined.csv', 
-        'Qwen': 'qwen_combined.csv'
+        'Qwen': 'qwen_combined.csv',
+        'Gemma': 'gemma_combined.csv'
     }
     
     for model_name, filename in model_files.items():
@@ -124,7 +126,7 @@ def create_comparison_plots(models, figures_dir):
             bp = ax.boxplot(data_to_plot, labels=labels, patch_artist=True)
             
             # Color the boxes
-            colors = ['lightblue', 'lightgreen', 'lightcoral']
+            colors = ['lightblue', 'lightgreen', 'lightcoral', 'lightyellow']
             for patch, color in zip(bp['boxes'], colors[:len(bp['boxes'])]):
                 patch.set_facecolor(color)
                 patch.set_alpha(0.7)
@@ -150,7 +152,7 @@ def create_scatter_plot(models, figures_dir):
     """Create prefill vs decode speed scatter plot"""
     fig, ax = plt.subplots(figsize=(10, 8))
     
-    colors = ['blue', 'green', 'red']
+    colors = ['blue', 'green', 'red', 'orange']
     
     for i, (model_name, df) in enumerate(models.items()):
         if 'Prefill_Speed_tps' in df.columns and 'Decode_Speed_tps' in df.columns:
@@ -205,7 +207,7 @@ def create_consistency_plot(models, figures_dir):
     """Create TTFT consistency over time plot"""
     fig, ax = plt.subplots(figsize=(12, 6))
     
-    colors = ['blue', 'green', 'red']
+    colors = ['blue', 'green', 'red', 'orange']
     
     for i, (model_name, df) in enumerate(models.items()):
         if 'Time_to_First_Token_ms' in df.columns:
